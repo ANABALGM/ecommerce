@@ -1,0 +1,60 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg" style="background-color: black;">
+
+    <div class="col-3">
+      <a href="{% url 'ecomapp:allProdCat' %}">
+        <img src="{% static 'img/abc1.png' %}" alt="logoimage" width="75px" height="75px" style="margin-left:4px;">
+      </a>
+    </div>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left:300px;">
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'ecomapp:allProdCat' %}"  style="color:white;margin-right:15px; ">HOME</a>
+            </li>
+
+            <li class="nav-item dropdown {% if 'ecomapp' in request.path %} active {% endif %}">
+            <a class="nav-link dropdown-toggle" href="{% url 'ecomapp:allProdCat' %}"role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:white;">
+            shop
+            </a>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'ecomapp:allProdCat' %}" >ALL</a></li>
+            {% for cat in links %}
+            <li><a class="dropdown-item" href="{{cat.get_url}}">{{cat.name}}</a></li>
+            {% endfor %}
+            </ul></ul>
+    </div>
+
+    <div style="margin-left: 20px;">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% if item_count > 0 %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cartapp:cart_detail' %}">
+            <i class="fa-solid fa-cart-plus" style="color:white;"></i>
+              <span style="color: white;">({{ item_count }})</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+
+   <form class="d-flex" action="{% url 'search_app:searchResult' %}" method="get" style="width: 250px; height: 28px; margin-right:55px;">
+  {% csrf_token %}
+  <div style="display: flex; align-items: center;">
+    <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search" style="text-align: center;width: 250px; height: 28px;">
+    <button class="btn btn-outline-success" type="submit" style="color: black; background-color: white;">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </div>
+</form>
+
+  </div>
+</nav>
+
+
+
